@@ -29,7 +29,26 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+
+          # If requirements.txt exists, install it
+          if [ -f requirements.txt ]; then
+            echo "Installing requirements.txt..."
+            pip install -r requirements.txt
+          else
+            echo "No requirements.txt found"
+          fi
+
+          # If pyproject.toml or setup.py exists, install project
+          if [ -f pyproject.toml ] || [ -f setup.py ]; then
+            echo "Installing project as package..."
+            pip install .
+          else
+            echo "No build config found – adding project root to PYTHONPATH"
+            export PYTHONPATH="${{ github.workspace }}"
+            echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
+          fi
+
+          # Install ezmon plugin fork
           pip install "git+https://github.com/andreas16700/pytest-testmon@main"
 
       - name: Run tests with ezmon (auto sync)
