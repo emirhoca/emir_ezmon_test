@@ -1,0 +1,37 @@
+name: Tests (pytest + ezmon)
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: "pytest --ezmon (auto sync)"
+    runs-on: macos-latest
+
+    env:
+      PY_VERSION: "3.12"
+      TESTMON_SERVER: "https://ezmon.aloiz.ch"
+      REPO_ID: ${{ github.repository }}
+      JOB_ID: "python-3.12-macos"
+      RUN_ID: ${{ github.run_id }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PY_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install "git+https://github.com/andreas16700/pytest-testmon@main"
+
+      - name: Run tests with ezmon (auto sync)
+        run: |
+          pytest --ezmon
