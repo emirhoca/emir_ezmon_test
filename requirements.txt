@@ -1,2 +1,3 @@
 pytest
 requests
+git+https://github.com/andreas16700/pytest-testmon@main
