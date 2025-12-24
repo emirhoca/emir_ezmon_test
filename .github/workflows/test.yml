@@ -14,7 +14,7 @@ jobs:
       PY_VERSION: "3.12"
       TESTMON_SERVER: "https://ezmon.aloiz.ch"
       REPO_ID: ${{ github.repository }}
-      JOB_ID: "python-3.12-macos"
+      JOB_ID: "python-3.12-windows"
       RUN_ID: ${{ github.run_id }}
 
     steps:
