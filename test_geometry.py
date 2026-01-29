@@ -10,7 +10,7 @@ def test_circle_area():
     assert circle_area(0) == 0
 
 def test_rectangle_area():
-    assert rectangle_area(4, 5) == 20
+    assert rectangle_area(4, 6) == 24
     assert rectangle_area(3, 3) == 9
     assert rectangle_area(10, 1) == 10
 
