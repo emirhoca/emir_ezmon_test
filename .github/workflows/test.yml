@@ -12,10 +12,9 @@ jobs:
 
     env:
       PY_VERSION: "3.12"
-      # NetDB configuration
       TESTMON_NET_ENABLED: "true"
       TESTMON_SERVER: "https://ezmon.aloiz.ch"
-      TESTMON_AUTH_TOKEN: ${{ secrets.TESTMON_AUTH_TOKEN }}
+      TESTMON_AUTH_TOKEN: "ezmon-ci-test-token-2024"   # ← this line changed
       REPO_ID: ${{ github.repository }}
       JOB_ID: "python-3.12-macos"
       RUN_ID: ${{ github.run_id }}
@@ -33,24 +32,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
 
-          # If requirements.txt exists, install it
           if [ -f requirements.txt ]; then
-            echo "Installing requirements.txt..."
             pip install -r requirements.txt
-          else
-            echo "No requirements.txt found"
           fi
 
-          # If pyproject.toml or setup.py exists, install project
           if [ -f pyproject.toml ] || [ -f setup.py ]; then
-            echo "Installing project as package..."
             pip install .
           else
-            echo "No build config found – adding project root to PYTHONPATH"
             echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
           fi
 
-          # Install ezmon plugin
           pip install "git+https://github.com/andreas16700/pytest-testmon@main"
 
       - name: Run tests with ezmon + net db
