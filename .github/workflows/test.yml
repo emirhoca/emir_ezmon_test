@@ -7,14 +7,17 @@ on:
 
 jobs:
   test:
-    name: "pytest --ezmon (auto sync)"
+    name: "pytest --ezmon (net db)"
     runs-on: macos-latest
 
     env:
       PY_VERSION: "3.12"
+      # NetDB configuration
+      TESTMON_NET_ENABLED: "true"
       TESTMON_SERVER: "https://ezmon.aloiz.ch"
+      TESTMON_AUTH_TOKEN: ${{ secrets.TESTMON_AUTH_TOKEN }}
       REPO_ID: ${{ github.repository }}
-      JOB_ID: "python-3.12-windows"
+      JOB_ID: "python-3.12-macos"
       RUN_ID: ${{ github.run_id }}
 
     steps:
@@ -44,13 +47,12 @@ jobs:
             pip install .
           else
             echo "No build config found – adding project root to PYTHONPATH"
-            export PYTHONPATH="${{ github.workspace }}"
             echo "PYTHONPATH=${{ github.workspace }}" >> $GITHUB_ENV
           fi
 
-          # Install ezmon plugin fork
+          # Install ezmon plugin
           pip install "git+https://github.com/andreas16700/pytest-testmon@main"
 
-      - name: Run tests with ezmon (auto sync)
+      - name: Run tests with ezmon + net db
         run: |
           pytest --ezmon
