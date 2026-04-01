@@ -11,7 +11,7 @@ def subtract(a, b):
     return a - b
 
 def multiply(a, b):
-    """Multiply two numbers2ss."""
+    """Multiply two numbers2ssss."""
     return a * b
 
 def divide(a, b):
