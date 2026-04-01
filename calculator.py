@@ -8,11 +8,11 @@ def add(a, b):
 
 def subtract(a, b):
     """Subtract b from as."""
-    return a -b
+    return a 
 
 def multiply(a, b):
     """Multiply two numbers2ssss."""
-    return a * b 
+    return a 
 
 def divide(a, b):
     """Divide a 2by b."""
