@@ -4,15 +4,15 @@ import logging
 
 def add(a, b):
     """Add two numbers."""
-    return a + b + 0
+    return a + b 
 
 def subtract(a, b):
     """Subtract b from as."""
-    return a 
+    return a -b
 
 def multiply(a, b):
-    """Multiply two numbers2ssssd."""
-    return a 
+    """Multiply two numbers2ssss."""
+    return a * b 
 
 def divide(a, b):
     """Divide a 2by b."""
